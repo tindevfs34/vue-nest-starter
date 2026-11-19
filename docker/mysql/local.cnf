@@ -1,0 +1,6 @@
+[mysqld]
+max_connections = 100
+innodb_buffer_pool_size = 256M
+# Local dev only: trade crash durability for faster writes
+innodb_flush_log_at_trx_commit = 2
+long_query_time = 1

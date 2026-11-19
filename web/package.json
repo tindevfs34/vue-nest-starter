@@ -1,0 +1,39 @@
+{
+  "name": "nuxt-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@mdi/js": "^7.4.47",
+    "@nuxt/image": "^1.11.0",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/i18n": "^10.1.0",
+    "@nuxtjs/sitemap": "^7.6.0",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
+    "devicon": "^2.17.0",
+    "flag-icons": "^7.5.0",
+    "nuxt": "^4.0.3",
+    "nuxt-swiper": "^2.0.1",
+    "sass": "^1.103.1",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1",
+    "vue-tabler-icons": "^2.21.0",
+    "vue3-carousel": "^0.16.0",
+    "vuetify": "^4.1.12",
+    "vuetify-nuxt-module": "^1.0.0-rc.5"
+  },
+  "devDependencies": {
+    "baseline-browser-mapping": "^2.11.20",
+    "caniuse-lite": "^1.0.30001810",
+    "lightningcss": "^1.33.0",
+    "sass-embedded": "^1.90.0",
+    "sharp": "^0.35.4"
+  }
+}

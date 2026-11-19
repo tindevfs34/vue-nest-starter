@@ -1,0 +1,157 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:meta';
+
+// Global font size and border radius
+$border-radius-root: 8px;
+$body-font-family: 'Inter', sans-serif !default;
+$btn-font-weight: 400 !default;
+$btn-letter-spacing: 0 !default;
+
+// Custom Variables
+// colors
+$white: #fff !default;
+
+// cards
+$card-item-spacer-xy: 24px !default;
+$card-text-spacer: 24px !default;
+$card-title-size: 16px !default;
+
+// Global Shadow
+$box-shadow: 0px 8px 24px rgba(19, 25, 32, 0.08);
+
+$theme-colors: (
+  primary: var(--v-theme-primary),
+  secondary: var(--v-theme-secondary),
+  success: var(--v-theme-success),
+  info: var(--v-theme-info),
+  warning: var(--v-theme-warning),
+  error: var(--v-theme-error)
+);
+
+// Vuetify 4 SASS variable overrides
+// Uses @forward 'vuetify/settings' — only override variables declared with !default
+// Note: Vuetify 4 (MD3) uses new typography keys (display-large, headline-large, etc.)
+//       and removed $shadow-key-* variables entirely.
+@forward 'vuetify/settings' with (
+  // Disable color-pack to reduce bundle size
+  $color-pack: false,
+
+  // Global font family
+  $body-font-family: $body-font-family,
+  $heading-font-family: $body-font-family,
+
+  // Global border radius
+  $border-radius-root: $border-radius-root,
+
+  // Global Radius
+  $rounded: (
+    0: 0,
+    'sm': $border-radius-root * 0.5,
+    null: $border-radius-root,
+    'md': $border-radius-root * 1,
+    'lg': $border-radius-root * 1.5,
+    'xl': $border-radius-root * 6,
+    'pill': 9999px,
+    'circle': 50%,
+    'shaped': $border-radius-root * 6 0
+  ),
+
+  // Global font size
+  $font-size-root: 1rem,
+
+  // MD3 Typography overrides
+  $typography: (
+    'display-large': (
+      'size': 2.375rem,
+      'weight': 600,
+      'line-height': 1.21,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'display-medium': (
+      'size': 1.875rem,
+      'weight': 600,
+      'line-height': 1.27,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'display-small': (
+      'size': 1.5rem,
+      'weight': 600,
+      'line-height': 1.33,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'headline-large': (
+      'size': 1.25rem,
+      'weight': 600,
+      'line-height': 1.4,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'headline-medium': (
+      'size': 1rem,
+      'weight': 600,
+      'line-height': 1.5,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'headline-small': (
+      'size': 0.875rem,
+      'weight': 400,
+      'line-height': 1.57,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'title-large': (
+      'size': 0.875rem,
+      'weight': 600,
+      'line-height': 1.57,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'title-medium': (
+      'size': 0.75rem,
+      'weight': 500,
+      'line-height': 1.66,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'body-large': (
+      'size': 0.875rem,
+      'weight': 400,
+      'letter-spacing': 0,
+      'line-height': 1.57,
+      'font-family': inherit
+    ),
+    'body-medium': (
+      'size': 0.75rem,
+      'weight': 400,
+      'line-height': 1.66,
+      'letter-spacing': normal,
+      'font-family': inherit
+    ),
+    'label-large': (
+      'size': 0.875rem,
+      'weight': 500,
+      'font-family': inherit,
+      'line-height': 1.43,
+      'letter-spacing': normal,
+    ),
+    'label-medium': (
+      'size': 0.75rem,
+      'weight': 400,
+      'letter-spacing': 0,
+      'line-height': 1.33,
+      'font-family': inherit
+    ),
+    'label-small': (
+      'size': 0.75rem,
+      'weight': 400,
+      'font-family': inherit,
+      'line-height': 1.67,
+      'letter-spacing': 0,
+    )
+  )
+);

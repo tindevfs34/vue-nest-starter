@@ -1,0 +1,43 @@
+// Vuetify 4 SASS settings (variables + @forward 'vuetify/settings')
+// Must be imported first so Vuetify picks up the overrides
+@use './variables';
+
+// Vuetify component style overrides
+@use './override';
+@use './layout/container';
+@use './layout/sidebar';
+@use './layout/footer';
+@use './layout/topbar';
+@use './layout/horizontal';
+
+@use './components/VAlert';
+@use './components/VAvatar';
+@use './components/VList';
+@use './components/VButtons';
+@use './components/VCard';
+@use './components/VBadge';
+@use './components/VBreadcrumb';
+@use './components/VPagination';
+@use './components/VField';
+@use './components/VInput';
+@use './components/VNavigationDrawer';
+@use './components/VShadow';
+@use './components/VTextField';
+@use './components/VTextarea';
+@use './components/VTabs';
+@use './components/VTimeline';
+@use './components/VTimepicker';
+@use './components/VCalendar';
+@use './components/VTable';
+@use './components/VuedatePicker';
+@use './components/toast';
+
+@use './pages/datatable';
+@use './pages/dashboards';
+@use './pages/editor';
+@use './pages/authentication';
+@use './pages/record';
+
+@use './layout/dark';
+@use './custom';
+

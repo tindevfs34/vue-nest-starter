@@ -1,0 +1,135 @@
+@use '../variables' as *;
+
+.v-field--variant-outlined {
+  .v-field__outline__start.v-locale--is-ltr {
+    border-radius: $border-radius-root 0 0 $border-radius-root;
+  }
+  .v-field__outline__end.v-locale--is-ltr {
+    border-radius: 0 $border-radius-root $border-radius-root 0;
+  }
+  .v-field__outline__start.v-locale--is-rtl {
+    border-radius: 0 $border-radius-root $border-radius-root 0;
+  }
+  .v-field__outline__end.v-locale--is-rtl {
+    border-radius: $border-radius-root 0 0 $border-radius-root;
+  }
+  .v-number-input__control {
+    .v-btn {
+      &:last-child {
+        border-radius: 0 $border-radius-root $border-radius-root 0;
+      }
+    }
+  }
+  &.v-locale--is-rtl {
+    .v-number-input__control {
+      .v-btn {
+        &:last-child {
+          border-radius: $border-radius-root 0 0 $border-radius-root;
+        }
+      }
+    }
+  }
+}
+.v-locale--is-ltr {
+  .v-field--variant-outlined {
+    .v-field__outline__start {
+      border-radius: $border-radius-root 0 0 $border-radius-root;
+    }
+    .v-field__outline__end {
+      border-radius: 0 $border-radius-root $border-radius-root 0;
+    }
+  }
+  .v-field--variant-outlined.v-field--reverse {
+    .v-field__outline__start {
+      border-radius: 0 $border-radius-root $border-radius-root 0;
+    }
+    .v-field__outline__end {
+      border-radius: $border-radius-root 0 0 $border-radius-root;
+    }
+  }
+}
+.v-locale--is-rtl {
+  .v-field--variant-outlined {
+    .v-field__outline__start {
+      border-radius: 0 $border-radius-root $border-radius-root 0;
+    }
+    .v-field__outline__end {
+      border-radius: $border-radius-root 0 0 $border-radius-root;
+    }
+  }
+  .v-field--variant-outlined.v-field--reverse {
+    .v-field__outline__start {
+      border-radius: $border-radius-root 0 0 $border-radius-root;
+    }
+    .v-field__outline__end {
+      border-radius: 0 $border-radius-root $border-radius-root 0;
+    }
+  }
+}
+.v-field--variant-outlined.v-field--reverse {
+  .v-field__outline__start.v-locale--is-ltr {
+    border-radius: 0 $border-radius-root $border-radius-root 0;
+  }
+  .v-field__outline__end.v-locale--is-ltr {
+    border-radius: $border-radius-root 0 0 $border-radius-root;
+  }
+  .v-field__outline__start.v-locale--is-rtl {
+    border-radius: $border-radius-root 0 0 $border-radius-root;
+  }
+  .v-field__outline__end.v-locale--is-rtl {
+    border-radius: 0 $border-radius-root $border-radius-root 0;
+  }
+  .v-number-input__control {
+    .v-btn {
+      &:last-child {
+        border-radius: 0;
+      }
+      &:first-child {
+        border-radius: $border-radius-root 0 0 $border-radius-root;
+      }
+    }
+  }
+  &.v-locale--is-rtl {
+    .v-number-input__control {
+      .v-btn {
+        &:last-child {
+          border-radius: 0;
+        }
+        &:first-child {
+          border-radius: 0 $border-radius-root $border-radius-root 0;
+        }
+      }
+    }
+  }
+}
+
+// Outlined variant enhancement (clean border, surface bg, focus ring)
+.v-field--variant-outlined {
+  background-color: rgb(var(--v-theme-surface));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  .v-field__outline {
+    --v-field-border-opacity: 1;
+    color: #cbd5e1;
+  }
+
+  &:hover .v-field__outline {
+    color: #94a3b8;
+  }
+
+  &.v-field--focused .v-field__outline {
+    color: rgb(var(--v-theme-primary));
+    box-shadow: 0 0 0 1px rgb(var(--v-theme-primary));
+  }
+}
+
+// Compact density fields vertical alignment
+.v-field--density-compact {
+  .v-field__input {
+    min-height: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+}

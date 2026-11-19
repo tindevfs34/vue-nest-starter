@@ -1,0 +1,150 @@
+name: vue-nest-starter
+services:
+  # ----------------------------------------
+  # MySQL Database
+  # ----------------------------------------
+  mysql:
+    image: mysql:8.4.13
+    container_name: test-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Run cp .env.local.example .env first}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?Run cp .env.local.example .env first}
+      MYSQL_USER: ${MYSQL_USER:?Run cp .env.local.example .env first}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Run cp .env.local.example .env first}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/common.cnf:/etc/mysql/conf.d/01-common.cnf:ro
+      - ./mysql/local.cnf:/etc/mysql/conf.d/02-local.cnf:ro
+    healthcheck:
+      test: ["CMD-SHELL", 'MYSQL_PWD="$$MYSQL_ROOT_PASSWORD" mysqladmin ping -h 127.0.0.1 -uroot --silent']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - app-network
+
+  # ----------------------------------------
+  # MinIO S3-compatible Storage (LOCAL ONLY)
+  # ----------------------------------------
+  minio:
+    # NOTE: minio/minio was removed from Docker Hub.
+    # Chainguard's free tier only exposes :latest (versioned tags require a paid tier),
+    # so pin by immutable multi-arch digest (RELEASE.2026-11-16T00-11-40Z) for reproducible builds.
+    # To refresh if Chainguard rotates this digest:
+    #   docker pull cgr.dev/chainguard/minio:latest && docker inspect --format='{{index .RepoDigests 0}}' cgr.dev/chainguard/minio:latest
+    image: cgr.dev/chainguard/minio@sha256:7618b82bba99aadd77fcf59eb6cfd89b4b8b8e01ac796c474d57a1c1abf17e79
+    container_name: test-minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web Console
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY:?Run cp .env.local.example .env first}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY:?Run cp .env.local.example .env first}
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  # ----------------------------------------
+  # Backend API (NestJS) — Hot Reload
+  # ----------------------------------------
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+      target: development
+    container_name: test-backend-dev
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - "3002:3002"
+    volumes:
+      # Mount source code for hot reload
+      - ../backend:/app
+      # Keep node_modules inside container (avoid host conflicts)
+      - /app/node_modules
+      # Persist logs outside container
+      - ./data/backend-logs:/app/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+      # Backend creates/checks the S3 bucket on startup -> MinIO must be ready
+      minio:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # ----------------------------------------
+  # CMS (VueJS + Vite) — Hot Reload
+  # ----------------------------------------
+  cms:
+    build:
+      context: ../cms
+      dockerfile: Dockerfile
+      target: development
+    container_name: test-cms-dev
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../cms:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BROWSER=none
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # ----------------------------------------
+  # Web (NuxtJS 4 SSR) — Hot Reload
+  # ----------------------------------------
+  web:
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+      target: development
+    container_name: test-web-dev
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../web:/app
+      - /app/node_modules
+      - /app/.nuxt
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NUXT_HOST=0.0.0.0
+      - NUXT_PORT=3000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+# ----------------------------------------
+# Networks
+# ----------------------------------------
+networks:
+  app-network:
+    driver: bridge
+
+# ----------------------------------------
+# Volumes (persistent data)
+# ----------------------------------------
+volumes:
+  mysql-data:
+  minio-data:

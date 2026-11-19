@@ -1,0 +1,11 @@
+[mysqld]
+max_connections = 300
+# Tune based on server RAM (typically 50-70% of dedicated DB RAM)
+innodb_buffer_pool_size = 2G
+innodb_flush_log_at_trx_commit = 1
+sync_binlog = 1
+long_query_time = 2
+log-bin = mysql-bin
+# Note: ROW is already the default in MySQL 8.4 (binlog_format is deprecated in 8.4)
+# Keep binary logs for 7 days
+binlog_expire_logs_seconds = 604800

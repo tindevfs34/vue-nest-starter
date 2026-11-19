@@ -1,0 +1,50 @@
+.v-text-field {
+  input {
+    font-size: 0.875rem;
+    color: rgb(var(--v-theme-darkText));
+    font-weight: 500;
+    line-height: 1.4;
+
+    &::placeholder {
+      color: rgb(var(--v-theme-darkText));
+      opacity: 0.65;
+      font-weight: 400;
+    }
+  }
+
+  .v-field__prepend-inner .v-icon,
+  .v-field__append-inner .v-icon {
+    color: rgb(var(--v-theme-darkText));
+    opacity: 0.65;
+  }
+}
+
+.v-field__outline {
+  color: rgb(var(--v-theme-inputBorder));
+  --v-field-border-opacity: 1;
+}
+.inputWithbg {
+  .v-field--variant-outlined {
+    background-color: rgba(0, 0, 0, 0.025);
+  }
+}
+
+.v-autocomplete__selection {
+  height: 1.8rem;
+  font-size: 0.875rem;
+}
+.v-overlay-container {
+  .v-list {
+    .v-list-item-title {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.v-field.v-field--variant-solo-inverted {
+  &.v-field--focused {
+    .v-label {
+      color: rgba(var(--v-theme-surface), 1);
+    }
+  }
+}

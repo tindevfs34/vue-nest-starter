@@ -1,0 +1,140 @@
+name: vue-nest-starter
+services:
+  # ----------------------------------------
+  # MySQL Database
+  # ----------------------------------------
+  # Service names are prefixed with "test-" to avoid DNS alias collisions
+  # on the external "shared-gateway" network shared with other projects.
+  test-mysql:
+    image: mysql:8.4.13
+    container_name: test-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is required}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?MYSQL_DATABASE is required}
+      MYSQL_USER: ${MYSQL_USER:?MYSQL_USER is required}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/common.cnf:/etc/mysql/conf.d/01-common.cnf:ro
+      - ./mysql/prod.cnf:/etc/mysql/conf.d/02-prod.cnf:ro
+    expose:
+      - "3306"
+    healthcheck:
+      test: ["CMD-SHELL", 'MYSQL_PWD="$$MYSQL_ROOT_PASSWORD" mysqladmin ping -h 127.0.0.1 -uroot --silent']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # ----------------------------------------
+  # Backend API (NestJS) — Production
+  # ----------------------------------------
+  test-backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: test-backend
+    restart: unless-stopped
+    init: true
+    env_file: ./.env
+    expose:
+      - "3002"
+    volumes:
+      - ./data/backend-logs:/app/logs
+    depends_on:
+      test-mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+      - shared-gateway
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # ----------------------------------------
+  # CMS (Vue 3 + Vite -> Nginx) — Production
+  # ----------------------------------------
+  test-cms:
+    build:
+      context: ../cms
+      dockerfile: Dockerfile
+      target: production
+      args:
+        # Vite embeds VITE_* into the static bundle at BUILD time
+        VITE_BASE_URL: ${VITE_BASE_URL:-/}
+        VITE_BASE_API: ${VITE_BASE_API:?VITE_BASE_API is required}
+        VITE_BASE_API_CLOUD: ${VITE_BASE_API_CLOUD:-}
+        VITE_WEB_URL: ${VITE_WEB_URL:?VITE_WEB_URL is required}
+    container_name: test-cms
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - shared-gateway
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # ----------------------------------------
+  # Web (Nuxt 4 SSR) — Production
+  # ----------------------------------------
+  test-web:
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+      target: production
+      args:
+        NUXT_PUBLIC_API_BASE_URL: ${NUXT_PUBLIC_API_BASE_URL:?NUXT_PUBLIC_API_BASE_URL is required}
+        NUXT_PUBLIC_APP_NAME: ${NUXT_PUBLIC_APP_NAME:-}
+    container_name: test-web
+    restart: unless-stopped
+    init: true
+    environment:
+      NODE_ENV: production
+      NUXT_HOST: 0.0.0.0
+      NUXT_PORT: 3000
+      # SSR calls backend via project-specific service name (avoids shared-gateway alias collision)
+      NUXT_API_BASE: ${NUXT_API_BASE:-http://test-backend:3002/api/v1}
+      # Browser-side runtime override (Nuxt maps public.apiBase -> NUXT_PUBLIC_API_BASE)
+      NUXT_PUBLIC_API_BASE: ${NUXT_PUBLIC_API_BASE_URL:?NUXT_PUBLIC_API_BASE_URL is required}
+    expose:
+      - "3000"
+    depends_on:
+      test-backend:
+        condition: service_healthy
+    networks:
+      - app-network
+      - shared-gateway
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+# ----------------------------------------
+# Networks
+# ----------------------------------------
+networks:
+  app-network:
+    driver: bridge
+  shared-gateway:
+    external: true
+
+# ----------------------------------------
+# Volumes (persistent data)
+# ----------------------------------------
+volumes:
+  mysql-data:

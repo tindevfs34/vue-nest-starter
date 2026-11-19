@@ -1,0 +1,136 @@
+.inventory-entry-container {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.form-section-card {
+  border: 1px solid rgb(var(--v-theme-borderLight));
+  background-color: rgb(var(--v-theme-surface));
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border-color: rgb(var(--v-theme-inputBorder));
+  }
+}
+
+/* Toggle Buttons */
+.active-toggle-btn {
+  background-color: rgb(var(--v-theme-lightsuccess));
+  border: 1.5px solid rgb(var(--v-theme-success));
+  color: rgb(var(--v-theme-darksuccess));
+  font-weight: 600;
+  border-radius: 8px;
+  text-transform: none;
+  box-shadow: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.active-out-toggle-btn {
+  background-color: rgb(var(--v-theme-lightprimary));
+  border: 1.5px solid rgb(var(--v-theme-lightIcon));
+  color: rgb(var(--v-theme-darkblue));
+}
+
+.inactive-toggle-btn {
+  background-color: rgb(var(--v-theme-surface));
+  border: 1.5px solid rgb(var(--v-theme-inputBorder));
+  color: rgb(var(--v-theme-lightText));
+  font-weight: 500;
+  border-radius: 8px;
+  text-transform: none;
+  box-shadow: none;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgb(var(--v-theme-lightsecondary));
+    border-color: rgb(var(--v-theme-darksecondary));
+    color: rgb(var(--v-theme-darkText));
+  }
+}
+
+/* Custom Outlined Input Group (Addon Style) */
+.custom-input-group {
+  border: 1.5px solid rgb(var(--v-theme-inputBorder));
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgb(var(--v-theme-surface));
+  height: 54px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:focus-within {
+    border-color: rgb(var(--v-theme-primary));
+    box-shadow: 0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+
+    .custom-input-addon {
+      border-left-color: rgb(var(--v-theme-primary));
+    }
+  }
+}
+
+.custom-input {
+  border: none;
+  outline: none;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(var(--v-theme-darkText));
+  width: 100%;
+  background: transparent;
+  text-align: center;
+
+  &::placeholder {
+    color: rgb(var(--v-theme-inputBorder));
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+.custom-input-addon {
+  background-color: rgb(var(--v-theme-lightsecondary));
+  border-left: 1.5px solid rgb(var(--v-theme-inputBorder));
+  color: rgb(var(--v-theme-lightText));
+  font-size: 15px;
+  font-weight: 600;
+  min-width: 54px;
+}
+
+/* Dynamic colors for stock adjustments */
+.text-success-change {
+  color: rgb(var(--v-theme-success));
+}
+.text-error-change {
+  color: rgb(var(--v-theme-error));
+}
+
+/* Submit Button States */
+.submit-btn-active {
+  background-color: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-surface));
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgb(var(--v-theme-darkprimary));
+    border-color: rgb(var(--v-theme-darkprimary));
+  }
+}
+
+.submit-btn-disabled {
+  background-color: rgb(var(--v-theme-lightsecondary));
+  border: 1.5px solid rgb(var(--v-theme-inputBorder));
+  border-radius: 8px;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1;
+}

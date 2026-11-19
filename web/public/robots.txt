@@ -1,0 +1,35 @@
+# robots.txt
+# https://www.robotstxt.org/robotstxt.html
+
+# ===== Allow all major search engine crawlers =====
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# ===== General rules for all bots =====
+User-agent: *
+Disallow: /api/
+Disallow: /coming-soon/
+Disallow: /cam-on/
+
+# ===== Block known SEO-scraper bots (spam/low quality) =====
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# ===== Sitemap =====
+# Replace with your actual production domain
+Sitemap: https://yourdomain.com/sitemap.xml

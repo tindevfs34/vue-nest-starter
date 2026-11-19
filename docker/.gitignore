@@ -1,0 +1,5 @@
+# Real env files contain secrets — only commit the *.example templates
+.env
+# Runtime data (logs, ...)
+data/
+

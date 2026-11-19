@@ -1,0 +1,8 @@
+{
+  "watch": ["src"],
+  "ext": "ts",
+  "ignore": ["src/**/*.spec.ts", "temp/**", "logs/**", "dist/**", "*.md"],
+  "exec": "ts-node -r tsconfig-paths/register src/main.ts",
+  "legacyWatch": true,
+  "verbose": false
+}

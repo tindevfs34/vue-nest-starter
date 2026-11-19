@@ -1,0 +1,32 @@
+.v-select {
+  .v-field {
+    font-size: 0.875rem;
+
+    .v-field__input {
+      > input {
+        height: 90%;
+      }
+    }
+  }
+
+  // Selected item text in v-select matching tab text color & weight
+  .v-select__selection,
+  .v-select__selection-text {
+    font-size: 0.875rem !important;
+    color: rgb(var(--v-theme-darkText)) !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+  }
+
+  .v-select__placeholder {
+    font-size: 0.875rem !important;
+    color: rgb(var(--v-theme-darkText)) !important;
+    opacity: 0.65 !important;
+    font-weight: 400 !important;
+  }
+
+  .v-select__menu-icon {
+    color: rgb(var(--v-theme-darkText)) !important;
+    opacity: 0.65 !important;
+  }
+}

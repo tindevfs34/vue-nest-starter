@@ -1,0 +1,82 @@
+import type { ThemeColorType } from "@/types/theme-color.type";
+import {
+  PrimaryColor,
+  PrimaryDarkColor,
+  PrimaryLightColor,
+  PrimaryLightColorForDark,
+} from "@/plugins/vuetify";
+
+export const themeColors: ThemeColorType[] = [
+  {
+    bg: "themeDefault",
+    color: PrimaryColor,
+    darkColor: PrimaryDarkColor,
+    lightcolor: PrimaryLightColor,
+    lightcolorfordark: PrimaryLightColorForDark,
+    label: "default",
+  },
+  {
+    bg: "themeLightTheme1",
+    color: "#3366ff",
+    darkColor: "#254EDB",
+    lightcolor: "#D6E4FF",
+    lightcolorfordark: "#1c2134",
+    label: "theme1",
+  },
+  {
+    bg: "themeLightTheme2",
+    color: "#7265e6",
+    darkColor: "#6A5DE3",
+    lightcolor: "#EEEDFC",
+    lightcolorfordark: "#222130",
+    label: "theme2",
+  },
+  {
+    bg: "themeLightTheme3",
+    color: "#068e44",
+    darkColor: "#006933",
+    lightcolor: "#E6F3EC",
+    lightcolorfordark: "#1a231f",
+    label: "theme3",
+  },
+  {
+    bg: "themeLightTheme4",
+    color: "#3c64d0",
+    darkColor: "#2947ab",
+    lightcolor: "#f0f6ff",
+    lightcolorfordark: "#1d212d",
+    label: "theme4",
+  },
+  {
+    bg: "themeLightTheme5",
+    color: "#f27013",
+    darkColor: "#cc5206",
+    lightcolor: "#fff4e6",
+    lightcolorfordark: "#32221a",
+    label: "theme5",
+  },
+  {
+    bg: "themeLightTheme6",
+    color: "#2aa1af",
+    darkColor: "#1a7b8a",
+    lightcolor: "#e1f0ef",
+    lightcolorfordark: "#1c2628",
+    label: "theme6",
+  },
+  {
+    bg: "themeLightTheme7",
+    color: "#00a854",
+    darkColor: "#008245",
+    lightcolor: "#d1e8d99c",
+    lightcolorfordark: "#1a2721",
+    label: "theme7",
+  },
+  {
+    bg: "themeLightTheme8",
+    color: "#009688",
+    darkColor: "#007069",
+    lightcolor: "#c1d6d066",
+    lightcolorfordark: "#1a2524",
+    label: "theme8",
+  },
+];
